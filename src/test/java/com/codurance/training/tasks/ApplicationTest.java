@@ -27,17 +27,17 @@ public final class ApplicationTest {
     public ApplicationTest() throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(new PipedInputStream(inStream)));
         PrintWriter out = new PrintWriter(new PipedOutputStream(outStream), true);
-        TaskList taskList = new TaskList(in, out);
-        applicationThread = new Thread(taskList);
+        TaskView taskView = new TaskView(in, out);
+        applicationThread = new Thread(taskView);
     }
 
-    @Before public void
-    start_the_application() {
+    @Before
+    public void start_the_application() {
         applicationThread.start();
     }
 
-    @After public void
-    kill_the_application() throws IOException, InterruptedException {
+    @After
+    public void kill_the_application() throws IOException, InterruptedException {
         if (!stillRunning()) {
             return;
         }
@@ -51,8 +51,8 @@ public final class ApplicationTest {
         throw new IllegalStateException("The application is still running.");
     }
 
-    @Test(timeout = 1000) public void
-    it_works() throws IOException {
+    @Test(timeout = 1000)
+    public void it_works() throws IOException {
         execute("show");
 
         execute("add project secrets");
@@ -61,11 +61,10 @@ public final class ApplicationTest {
 
         execute("show");
         readLines(
-            "secrets",
-            "    [ ] 1: Eat more donuts.",
-            "    [ ] 2: Destroy all humans.",
-            ""
-        );
+                "secrets",
+                "    [ ] 1: Eat more donuts.",
+                "    [ ] 2: Destroy all humans.",
+                "");
 
         execute("add project training");
         execute("add task training Four Elements of Simple Design");
@@ -93,8 +92,7 @@ public final class ApplicationTest {
                 "    [x] 6: Primitive Obsession",
                 "    [ ] 7: Outside-In TDD",
                 "    [ ] 8: Interaction-Driven Design",
-                ""
-        );
+                "");
 
         execute("quit");
     }
