@@ -6,39 +6,37 @@ import java.util.Map;
 
 import com.codurance.training.base.Task;
 
-public class TaskService implements TaskServiceInterface {
-    private TaskHolder taskHolder = new TaskHolder();
+public class TaskService implements ITaskService {
 
     @Override
     public Map<String, List<Task>> getProjects() {
-        return this.taskHolder.projects;
+        return TaskHolder.projects;
     }
 
     @Override
     public List<Task> getTasks(String pName) {
-        return this.taskHolder.projects.get(pName);
+        return TaskHolder.projects.get(pName);
     }
 
     @Override
     public void addProject(String pName) {
-        this.taskHolder.projects.put(pName, new ArrayList<Task>());
+        TaskHolder.projects.put(pName, new ArrayList<Task>());
     }
 
     @Override
     public void addTask(String pName, Task task) {
-        this.taskHolder.projects.get(pName).add(task);
+        TaskHolder.projects.get(pName).add(task);
     }
 
     @Override
-    public void uncheckTask(int tid) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'uncheckTask'");
+    public void uncheckTask(String pName, int tid) {
+        TaskHolder.projects.get(pName).get(tid).setDone(true);
+
     }
 
     @Override
-    public void checkTask(int tid) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'checkTask'");
+    public void checkTask(String pName, int tid) {
+        TaskHolder.projects.get(pName).get(tid).setDone(true);
     }
 
 }

@@ -26,4 +26,8 @@ public final class Task {
     public void setDone(boolean done) {
         this.done = done;
     }
+
+    public String getShow() {
+        return String.format("    [%c] %d: %s%n", (this.isDone() ? 'x' : ' '), this.getId(), this.getDescription());
+    }
 }

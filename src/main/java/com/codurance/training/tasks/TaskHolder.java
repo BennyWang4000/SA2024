@@ -10,5 +10,5 @@ import com.codurance.training.base.Task;
  * TaskHolder
  */
 public class TaskHolder {
-    protected final Map<String, List<Task>> projects = new LinkedHashMap<>();
+    protected static final Map<String, List<Task>> projects = new LinkedHashMap<>();
 }

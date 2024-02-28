@@ -5,7 +5,8 @@ import java.util.Map;
 
 import com.codurance.training.base.Task;
 
-public interface TaskServiceInterface {
+public interface ITaskService {
+
     Map<String, List<Task>> getProjects();
 
     List<Task> getTasks(String pName);
@@ -14,7 +15,7 @@ public interface TaskServiceInterface {
 
     void addTask(String pName, Task task);
 
-    void uncheckTask(int tid);
+    void uncheckTask(String pName, int tid);
 
-    void checkTask(int tid);
+    void checkTask(String pName, int tid);
 }

@@ -1,33 +1,23 @@
 package com.codurance.training.tasks;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.codurance.training.base.BaseView;
-import com.codurance.training.base.BaseViewModel;
+import com.codurance.training.base.BaseModel;
 import com.codurance.training.base.Task;
 import com.codurance.training.utils.Const;
 
-public class TaskViewModel extends BaseViewModel {
+public class TaskListModel extends BaseModel {
 
-    public TaskViewModel(BaseView view) {
+    public TaskListModel(BaseView view) {
         super(view);
     }
 
     private TaskService taskService = new TaskService();
 
     private long lastId = 0;
-
-    protected void add(String commandLine) {
-        String[] subcommandRest = commandLine.split(" ", 2);
-        String subcommand = subcommandRest[0];
-        if (subcommand.equals("project")) {
-            addProject(subcommandRest[1]);
-        } else if (subcommand.equals("task")) {
-            String[] projectTask = subcommandRest[1].split(" ", 2);
-            this.addTask(projectTask[0], projectTask[1]);
-        }
-    }
 
     protected void check(String idString) {
         setDone(idString, true);
@@ -67,15 +57,18 @@ public class TaskViewModel extends BaseViewModel {
         this.taskService.addTask(pName, new Task(nextId(), description, false));
     }
 
-    protected void uncheckTask(int tid) {
-        this.taskService.uncheckTask(tid);
-    }
-
-    protected void checkTask(int tid) {
-        this.taskService.checkTask(tid);
-    }
-
     protected Map<String, List<Task>> getProjects() {
         return this.taskService.getProjects();
+    }
+
+    public void show() {
+        List<String> res = new ArrayList<String>();
+        for (Map.Entry<String, List<Task>> project : this.getProjects().entrySet()) {
+            res.add(project.getKey());
+            for (Task task : project.getValue()) {
+                res.add(task.getShow());
+            }
+        }
+        this.view.printLines(res);
     }
 }

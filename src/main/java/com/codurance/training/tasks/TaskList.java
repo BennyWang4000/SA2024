@@ -3,22 +3,19 @@ package com.codurance.training.tasks;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.Map;
 
 import com.codurance.training.base.BaseView;
-import com.codurance.training.base.Task;
 import com.codurance.training.utils.Const;
 
-public final class TaskView extends BaseView {
+public final class TaskList extends BaseView {
 
-    public TaskView(BufferedReader reader, PrintWriter writer) {
+    public TaskList(BufferedReader reader, PrintWriter writer) {
         super(reader, writer);
     }
 
     private static final String QUIT = "quit";
 
-    private TaskViewModel viewModel = new TaskViewModel(this);
+    private TaskListModel model = new TaskListModel(this);
 
     @Override
     public void run() {
@@ -43,16 +40,23 @@ public final class TaskView extends BaseView {
         String command = commandRest[0];
         switch (command) {
             case "show":
-                show();
+                this.model.show();
                 break;
             case "add":
-                this.viewModel.add(commandRest[1]);
+                String[] subcommandRest = commandLine.split(" ", 2);
+                String subcommand = subcommandRest[0];
+                if (subcommand.equals("project")) {
+                    this.model.addProject(subcommandRest[1]);
+                } else if (subcommand.equals("task")) {
+                    String[] projectTask = subcommandRest[1].split(" ", 2);
+                    this.model.addTask(projectTask[0], projectTask[1]);
+                }
                 break;
             case "check":
-                this.viewModel.check(commandRest[1]);
+                this.model.check(commandRest[1]);
                 break;
             case "uncheck":
-                this.viewModel.uncheck(commandRest[1]);
+                this.model.uncheck(commandRest[1]);
                 break;
             case "help":
                 printLine(Const.helpMsg);
@@ -62,15 +66,4 @@ public final class TaskView extends BaseView {
                 break;
         }
     }
-
-    private void show() {
-        for (Map.Entry<String, List<Task>> project : this.viewModel.getProjects().entrySet()) {
-            writer.println(project.getKey());
-            for (Task task : project.getValue()) {
-                writer.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
-            }
-            writer.println();
-        }
-    }
-
 }
