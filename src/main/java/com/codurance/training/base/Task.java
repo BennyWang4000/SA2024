@@ -28,6 +28,6 @@ public final class Task {
     }
 
     public String getShow() {
-        return String.format("    [%c] %d: %s%n", (this.isDone() ? 'x' : ' '), this.getId(), this.getDescription());
+        return String.format("    [%c] %d: %s", (this.isDone() ? 'x' : ' '), this.getId(), this.getDescription());
     }
 }

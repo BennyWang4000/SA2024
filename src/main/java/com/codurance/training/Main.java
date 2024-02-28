@@ -11,7 +11,7 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter writer = new PrintWriter(System.out);
 
-        TaskList taskView = new TaskList(reader, writer);
-        taskView.run();
+        TaskList taskList = new TaskList(reader, writer);
+        taskList.run();
     }
 }

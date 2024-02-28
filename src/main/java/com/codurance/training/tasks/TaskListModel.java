@@ -62,12 +62,14 @@ public class TaskListModel extends BaseModel {
     }
 
     public void show() {
+
         List<String> res = new ArrayList<String>();
         for (Map.Entry<String, List<Task>> project : this.getProjects().entrySet()) {
             res.add(project.getKey());
             for (Task task : project.getValue()) {
                 res.add(task.getShow());
             }
+            res.add("");
         }
         this.view.printLines(res);
     }

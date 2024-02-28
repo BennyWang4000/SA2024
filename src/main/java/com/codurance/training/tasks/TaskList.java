@@ -43,7 +43,7 @@ public final class TaskList extends BaseView {
                 this.model.show();
                 break;
             case "add":
-                String[] subcommandRest = commandLine.split(" ", 2);
+                String[] subcommandRest = commandRest[1].split(" ", 2);
                 String subcommand = subcommandRest[0];
                 if (subcommand.equals("project")) {
                     this.model.addProject(subcommandRest[1]);
