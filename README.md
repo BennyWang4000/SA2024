@@ -1,42 +1,142 @@
 # SA2024
 HW1 資工碩一 王衍斌 112598041 
 
-- return value instead of calling the method of BaseView 
+## Layers from high to low
+| class         | function                  |
+| ------------- | ------------------------- |
+| Task          | data structure            |
+| TaskHolder    | singleton that have tasks |
+| TaskService   | access TaskHolder only    |
+| TaskListModel | business logics           |
+| TaskList      | read and print            |
+| Main          | main class                |
 
+## Abstract Classes and Interfaces
+| class          | function                                               |
+| -------------- | ------------------------------------------------------ |
+| ITaskService   | DIP                                                    |
+| ITaskListModel | DIP                                                    |
+| ITaskList      | DIP                                                    |
+| BaseView       | command-based view that provide printline and readline |
+| BaseModel      | recive service interface and stored it                 |
+
+
+
+## Class Diagram
 ```mermaid
 classDiagram
-direction LR
+direction TB
     class Main{
+        +main(String[] args) $
+    }
+    Main o-- ITaskList
 
-    }
-    Main o-- BaseView
-    class TaskList{
 
-    }
-    TaskList --> BaseModel
-    class TaskListModel{
-        
-    }
     class BaseView{
-
+        -BufferedReader reader
+        -PrintWriter writer
+        +BaseView(BufferedReader, PrintWriter)
+        +run()*
+        #readLine() String
+        #print(String)
+        #printLine(String)
+        #printLines(List~String~)
+        #flush()
+    }
+    class BaseModel~IService~{
+        #IService service
+        +BaseModel(IService)
     }
     BaseView <|-- TaskList
-    class BaseModel{
-
+    BaseModel <|-- TaskListModel: ITaskService
+    
+    class ITaskList{
+        +run() *
     }
-    BaseModel <|-- TaskListModel
-    class TaskService{
-
+    class ITaskListModel{
+        +getShow() List~String~
+        +add(String[]) String
+        +check(String) String
+        +uncheck(String) String
     }
     class ITaskService{
-
+        +getProjects() Map~String, List~Task~~
+        +getTasks(String) List~Task~
+        +addProject(String)
+        +addTask(String, Task)
+        +uncheckTask(String, int)
+        +checkTask(String, int)   
     }
-    TaskService <|.. ITaskService
+    ITaskList <|.. TaskList
+    ITaskListModel <|.. TaskListModel
+    ITaskService  <|.. TaskService
+
+    class TaskList{
+        -ITaskListModel model
+        -boolean isRunning
+        +TaskList(BufferedReader, PrintWriter)
+        +run()
+        -execute(String)
+    }
+    TaskList --> ITaskService
+    TaskList --> ITaskListModel
+    
+    class TaskListModel{
+        -long lastId
+        +TaskListModel(ITaskService)
+        +getShow() List~String~
+        +add(String[]) String
+        +check(String) String
+        +uncheck(String) String
+        -nextId() long
+        -addProject(String) String
+        -addTask(String, String) String
+        -setDone(String, boolean)
+    }
+    TaskListModel --> ITaskService
+
+    class TaskService{
+        +getProjects() Map~String, List~Task~~
+        +getTasks(String) List~Task~
+        +addProject(String)
+        +addTask(String, Task)
+        +uncheckTask(String, int)
+        +checkTask(String, int)   
+    }
+    TaskService --> TaskHolder
+    
+    class TaskHolder{
+        #Map~String, List~Task~~ projects $
+    }
+    TaskHolder o-- Task
     class Task{
-
+        -long id
+        -String description
+        -boolean done
+        +Task(long, String, boolean)
+        +getId() long
+        +getDescription() String
+        +isDone() boolean
+        +setDone(boolean)
+        +getShow() String
     }
+    TaskListModel --> Task
+    
+    <<interface>> ITaskList
+    <<interface>> ITaskListModel
+    <<interface>> ITaskService
+    <<abstract>> BaseView
+    <<abstract>> BaseModel
+    <<static>> TaskHolder
+    
 ```
-# HW1
+
+
+
+
+
+
+# HW1 Review
 ## Layers from high to low
 | class         | function                  |
 | ------------- | ------------------------- |

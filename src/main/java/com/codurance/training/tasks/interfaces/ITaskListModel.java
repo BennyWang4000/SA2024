@@ -4,12 +4,12 @@ import java.util.List;
 
 public interface ITaskListModel {
 
-    List<String> getShow();
+    public List<String> getShow();
 
-    String add(String[] commandRest);
+    public String add(String[] commandRest);
 
-    String check(String idString);
+    public String check(String idString);
 
-    String uncheck(String idString);
+    public String uncheck(String idString);
 
 }
