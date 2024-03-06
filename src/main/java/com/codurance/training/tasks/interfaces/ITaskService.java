@@ -1,9 +1,9 @@
-package com.codurance.training.tasks;
+package com.codurance.training.tasks.interfaces;
 
 import java.util.List;
 import java.util.Map;
 
-import com.codurance.training.base.Task;
+import com.codurance.training.tasks.data.Task;
 
 public interface ITaskService {
 

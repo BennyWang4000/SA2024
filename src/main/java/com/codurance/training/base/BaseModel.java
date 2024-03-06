@@ -1,10 +1,9 @@
 package com.codurance.training.base;
 
-public abstract class BaseModel {
-    protected BaseView view = null;
+public abstract class BaseModel<IService> {
+    protected IService service = null;
 
-    public BaseModel(BaseView view) {
-        this.view = view;
-    }
-
+    protected BaseModel(IService service) {
+        this.service = service;
+    };
 }
