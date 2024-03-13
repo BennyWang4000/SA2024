@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.codurance.training.base.Task;
+import com.codurance.training.tasks.data.Task;
 
 /**
  * TaskHolder

@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.codurance.training.base.Task;
+import com.codurance.training.tasks.data.Task;
+import com.codurance.training.tasks.interfaces.ITaskService;
 
 public class TaskService implements ITaskService {
 

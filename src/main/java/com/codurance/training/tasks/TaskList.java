@@ -5,31 +5,33 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.codurance.training.base.BaseView;
+import com.codurance.training.tasks.interfaces.ITaskList;
+import com.codurance.training.tasks.interfaces.ITaskListModel;
+import com.codurance.training.tasks.interfaces.ITaskService;
 import com.codurance.training.utils.Const;
 
-public final class TaskList extends BaseView {
+public final class TaskList extends BaseView implements ITaskList {
+
+    private ITaskListModel model = null;
+    private boolean isRunning = true;
 
     public TaskList(BufferedReader reader, PrintWriter writer) {
         super(reader, writer);
+
+        ITaskService service = new TaskService();
+        this.model = new TaskListModel(service);
     }
-
-    private static final String QUIT = "quit";
-
-    private TaskListModel model = new TaskListModel(this);
 
     @Override
     public void run() {
-        while (true) {
-            writer.print("> ");
-            writer.flush();
+        while (isRunning) {
+            print("> ");
+            flush();
             String command;
             try {
-                command = reader.readLine();
+                command = readLine();
             } catch (IOException e) {
                 throw new RuntimeException(e);
-            }
-            if (command.equals(QUIT)) {
-                break;
             }
             this.execute(command);
         }
@@ -40,26 +42,22 @@ public final class TaskList extends BaseView {
         String command = commandRest[0];
         switch (command) {
             case "show":
-                this.model.show();
+                printLines(this.model.getShow());
                 break;
             case "add":
-                String[] subcommandRest = commandRest[1].split(" ", 2);
-                String subcommand = subcommandRest[0];
-                if (subcommand.equals("project")) {
-                    this.model.addProject(subcommandRest[1]);
-                } else if (subcommand.equals("task")) {
-                    String[] projectTask = subcommandRest[1].split(" ", 2);
-                    this.model.addTask(projectTask[0], projectTask[1]);
-                }
+                printLine(this.model.add(commandRest));
                 break;
             case "check":
-                this.model.check(commandRest[1]);
+                printLine(this.model.check(commandRest[1]));
                 break;
             case "uncheck":
-                this.model.uncheck(commandRest[1]);
+                printLine(this.model.uncheck(commandRest[1]));
                 break;
             case "help":
-                printLine(Const.helpMsg);
+                printLines(Const.helpMsg);
+                break;
+            case "quit":
+                isRunning = false;
                 break;
             default:
                 printLine(Const.getNoCmdMsg(command));
