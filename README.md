@@ -26,6 +26,27 @@ HW1 資工碩一 王衍斌 112598041
 - the higher layer still directly access the lower layer
     - e.g. ```TaskListModel``` access the method ```printLine``` of ```BaseView```
 
+## Tree
+```
+.
+├── Main.java
+├── base
+│   ├── BaseModel.java
+│   └── BaseView.java
+├── tasks
+│   ├── TaskHolder.java
+│   ├── TaskList.java
+│   ├── TaskListModel.java
+│   ├── TaskService.java
+│   ├── data
+│   │   └── Task.java
+│   └── interfaces
+│       ├── ITaskList.java
+│       ├── ITaskListModel.java
+│       └── ITaskService.java
+└── utils
+    └── Const.java
+```
 
 ## Class Diagram
 
