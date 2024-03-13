@@ -28,6 +28,9 @@ HW1 資工碩一 王衍斌 112598041
 
 
 ## Class Diagram
+
+![](class_diagram.png)
+<!-- 
 ```mermaid
 classDiagram
 direction TB
@@ -134,4 +137,4 @@ direction TB
     <<abstract>> BaseModel
     <<static>> TaskHolder
     
-```
+``` -->
