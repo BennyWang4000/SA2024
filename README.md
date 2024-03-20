@@ -1,30 +1,12 @@
 # SA2024
 HW1 資工碩一 王衍斌 112598041 
 
-## Layers from high to low
-| class         | function                              |
-| ------------- | ------------------------------------- |
-| Const         | singleton to get the various messages |
-| Task          | data structure                        |
-| TaskHolder    | singleton that have task instances    |
-| TaskService   | access TaskHolder only                |
-| TaskListModel | business logics                       |
-| TaskList      | read and print                        |
-| Main          | main class                            |
-
-## Abstract Classes and Interfaces
-| class          | function                                                   |
-| -------------- | ---------------------------------------------------------- |
-| ITaskService   | interface of TaskService for DIP                           |
-| ITaskListModel | interface of TaskListModel for DIP                         |
-| ITaskList      | interface of TaskList for DIP                                                        |
-| BaseView       | command-based view that provide printline and readline etc |
-| BaseModel      | recive service interface and stored it                     |
-
-## Problems of HW1
-- every interfaces are not doing the DIP
-- the higher layer still directly access the lower layer
-    - e.g. ```TaskListModel``` access the method ```printLine``` of ```BaseView```
+## Fix HW2 by
+- let ```TaskPresenter.java``` be stateless
+- let ```TaskModel.java``` be stateful
+- value object
+- move the command business logic into TaskPresenter
+- print by callback in view
 
 ## Tree
 ```
@@ -32,22 +14,72 @@ HW1 資工碩一 王衍斌 112598041
 ├── Main.java
 ├── base
 │   ├── BaseModel.java
+│   ├── BasePresenter.java
 │   └── BaseView.java
-├── tasks
-│   ├── TaskHolder.java
-│   ├── TaskList.java
-│   ├── TaskListModel.java
-│   ├── TaskService.java
-│   ├── data
-│   │   └── Task.java
-│   └── interfaces
-│       ├── ITaskList.java
-│       ├── ITaskListModel.java
-│       └── ITaskService.java
-└── utils
-    └── Const.java
+└── tasks
+    ├── entity
+    │   ├── Const.java
+    │   ├── response
+    │   │   └── TaskResult.java
+    │   └── task
+    │       ├── IsDone.java
+    │       ├── Project.java
+    │       ├── ProjectName.java
+    │       ├── Projects.java
+    │       ├── Task.java
+    │       └── TaskId.java
+    ├── model
+    │   ├── ITaskModel.java
+    │   └── TaskModel.java
+    ├── presenter
+    │   ├── ITaskPresenter.java
+    │   └── TaskPresenter.java
+    └── view
+        ├── CommandCallback.java
+        ├── ITaskView.java
+        └── TaskView.java
 ```
 
-## Class Diagram
+## Layers
+- entity
 
-![](class_diagram.png)
+| class       | function                              |
+| ----------- | ------------------------------------- |
+| Const       | singleton to get the various messages |
+| TaskId      | id of task                            |
+| IsDone      | whether a task is done                |
+| Task        | task with IsDone, description         |
+| Project     | map of TaskId and Task                |
+| ProjectName | name of project                       |
+| Projects    | map of ProjectName and Project        |
+| TaskResult  | response of TaskModel                 |
+
+- model
+
+| class      | function            |
+| ---------- | ------------------- |
+| ITaskModel | interface for DIP   |
+| TaskModel  | contact with entity |
+
+- presenter
+
+| class          | function                       |
+| -------------- | ------------------------------ |
+| ITaskPresenter | interface for DIP              |
+| TaskPresenter  | contact between model and view |
+
+- view
+
+| class           | function                |
+| --------------- | ----------------------- |
+| CommandCallback | callback on success etc |
+| ITaskView       | interface for DIP       |
+| TaskView        | read and print          |
+
+- base
+
+| class         | function                                    |
+| ------------- | ------------------------------------------- |
+| BaseModel     | abstract model                              |
+| BasePresenter | abstract presneter and inject model into it |
+| BaseView      | abstract view and inject reader and printer |

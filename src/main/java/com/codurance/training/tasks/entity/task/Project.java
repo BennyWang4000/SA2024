@@ -20,10 +20,6 @@ public class Project {
         return this.tasks.entrySet();
     }
 
-    // public void setDone(TaskId id, IsDone isDone) {
-    // this.tasks.get(id).setDone(isDone);
-    // }
-
     public String getShow() {
         String res = "";
 

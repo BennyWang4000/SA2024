@@ -1,6 +1,6 @@
 package com.codurance.training.tasks.model;
 
-import com.codurance.training.base.BaseResult;
+import com.codurance.training.tasks.entity.response.TaskResult;
 import com.codurance.training.tasks.entity.task.IsDone;
 import com.codurance.training.tasks.entity.task.ProjectName;
 import com.codurance.training.tasks.entity.task.Task;
@@ -10,16 +10,16 @@ public interface ITaskModel {
 
     /* ---------------------------------- show ---------------------------------- */
 
-    public BaseResult<String> getShow();
+    public TaskResult<String> getShow();
 
     /* ----------------------------------- add ---------------------------------- */
 
-    public BaseResult<String> addProject(ProjectName name);
+    public TaskResult<String> addProject(ProjectName name);
 
-    public BaseResult<String> addTask(ProjectName name, Task task);
+    public TaskResult<String> addTask(ProjectName name, Task task);
 
     /* ---------------------------------- check --------------------------------- */
 
-    public BaseResult<String> setDone(TaskId id, IsDone isDone);
+    public TaskResult<String> setDone(TaskId id, IsDone isDone);
 
 }

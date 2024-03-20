@@ -28,12 +28,6 @@ public class Projects {
         return this.projects.entrySet();
     }
 
-    // public void setDone(TaskId id, IsDone isDone) {
-    // for (Map.Entry<ProjectName, Project> project : this.projects.entrySet()) {
-    // project.getValue().setDone(id, isDone);
-    // }
-    // };
-
     public String getShow() {
 
         String res = "";

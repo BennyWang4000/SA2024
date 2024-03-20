@@ -1,8 +1,8 @@
 package com.codurance.training.tasks.presenter;
 
 import com.codurance.training.base.BasePresenter;
-import com.codurance.training.base.BaseResult;
 import com.codurance.training.tasks.entity.Const;
+import com.codurance.training.tasks.entity.response.TaskResult;
 import com.codurance.training.tasks.entity.task.IsDone;
 import com.codurance.training.tasks.entity.task.ProjectName;
 import com.codurance.training.tasks.entity.task.Task;
@@ -17,13 +17,13 @@ public class TaskPresenter extends BasePresenter<ITaskModel> implements ITaskPre
 
     /* ---------------------------------- show ---------------------------------- */
 
-    private BaseResult<String> getShow() {
+    private TaskResult<String> getShow() {
         return this.model.getShow();
     }
 
     /* ----------------------------------- add ---------------------------------- */
 
-    private BaseResult<String> add(String[] commandRest) {
+    private TaskResult<String> add(String[] commandRest) {
         String[] subcommandRest = commandRest[1].split(" ", 2);
         String subcommand = subcommandRest[0];
         if (subcommand.equals("project")) {
@@ -33,14 +33,14 @@ public class TaskPresenter extends BasePresenter<ITaskModel> implements ITaskPre
             String[] projectTask = subcommandRest[1].split(" ", 2);
             return addTask(projectTask[0], projectTask[1]);
         }
-        return new BaseResult.Failure<>("added neither project nor task");
+        return TaskResult.empty();
     }
 
-    private BaseResult<String> addProject(String projectName) {
+    private TaskResult<String> addProject(String projectName) {
         return this.model.addProject(new ProjectName(projectName));
     }
 
-    private BaseResult<String> addTask(String projectName, String description) {
+    private TaskResult<String> addTask(String projectName, String description) {
         return this.model.addTask(
                 new ProjectName(projectName),
                 new Task(description,
@@ -49,26 +49,25 @@ public class TaskPresenter extends BasePresenter<ITaskModel> implements ITaskPre
 
     /* ---------------------------------- check --------------------------------- */
 
-    private BaseResult<String> check(String idString) {
+    private TaskResult<String> check(String idString) {
         return setDone(
                 new TaskId(Long.parseLong(idString)),
                 new IsDone(true));
     }
 
-    private BaseResult<String> uncheck(String idString) {
+    private TaskResult<String> uncheck(String idString) {
         return setDone(
                 new TaskId(Long.parseLong(idString)),
                 new IsDone(false));
     }
 
-    private BaseResult<String> setDone(TaskId id, IsDone isDone) {
+    private TaskResult<String> setDone(TaskId id, IsDone isDone) {
         return this.model.setDone(id, isDone);
-
     }
 
     @Override
     public void execute(String command, String[] commandRest, CommandCallback<String> callback) {
-        BaseResult<String> result;
+        TaskResult<String> result;
         switch (command) {
             case "show":
                 result = getShow();
@@ -83,34 +82,31 @@ public class TaskPresenter extends BasePresenter<ITaskModel> implements ITaskPre
                 result = uncheck(commandRest[1]);
                 break;
             case "help":
-                result = new BaseResult.Success<String>(Const.helpMsg);
+                result = TaskResult.success(Const.helpMsg);
                 break;
             case "quit":
-                result = new BaseResult.Quit<>();
+                result = TaskResult.quit();
                 break;
             default:
-                result = new BaseResult.Success<String>(Const.getNoCmdMsg(command));
+                result = TaskResult.success(Const.getNoCmdMsg(command));
                 break;
         }
 
         switch (result.getType()) {
             case SUCCESS:
-                callback.onSuccess((BaseResult.Success<String>) result);
+                callback.onSuccess((TaskResult.Success<String>) result);
                 break;
             case FAILURE:
-                callback.onFailure((BaseResult.Failure<String>) result);
+                callback.onFailure((TaskResult.Failure<String>) result);
                 break;
             case ERROR:
-                callback.onError((BaseResult.Error<String>) result);
+                callback.onError((TaskResult.Error<String>) result);
                 break;
             case QUIT:
                 callback.onQuit();
                 break;
             case EMPTY:
                 callback.onEmpty();
-                break;
-            default:
-                callback.onError(new BaseResult.Error<>(new UnknownError("unexpected case")));
                 break;
         }
     }

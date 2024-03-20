@@ -10,7 +10,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.codurance.training.Main;
 import com.codurance.training.tasks.view.TaskView;
 
 import static java.lang.System.lineSeparator;

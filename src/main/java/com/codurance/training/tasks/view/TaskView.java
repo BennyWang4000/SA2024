@@ -4,11 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import com.codurance.training.base.BaseResult;
-import com.codurance.training.base.BaseResult.Error;
 import com.codurance.training.base.BaseView;
-import com.codurance.training.tasks.entity.service.ITaskService;
-import com.codurance.training.tasks.entity.service.TaskService;
+import com.codurance.training.tasks.entity.response.TaskResult;
+import com.codurance.training.tasks.entity.response.TaskResult.Error;
 import com.codurance.training.tasks.model.ITaskModel;
 import com.codurance.training.tasks.model.TaskModel;
 import com.codurance.training.tasks.presenter.ITaskPresenter;
@@ -21,8 +19,8 @@ public final class TaskView extends BaseView implements ITaskView {
 
     public TaskView(BufferedReader reader, PrintWriter writer) {
         super(reader, writer);
-        ITaskService service = new TaskService();
-        ITaskModel model = new TaskModel(service);
+        // ITaskService service = new TaskService();
+        ITaskModel model = new TaskModel();
         this.presenter = new TaskPresenter(model);
     }
 
@@ -48,12 +46,12 @@ public final class TaskView extends BaseView implements ITaskView {
         CommandCallback<String> callback = new CommandCallback<String>() {
 
             @Override
-            public void onSuccess(BaseResult.Success<String> result) {
+            public void onSuccess(TaskResult.Success<String> result) {
                 printLine(result.getResult());
             }
 
             @Override
-            public void onFailure(BaseResult.Failure<String> result) {
+            public void onFailure(TaskResult.Failure<String> result) {
                 printLine(result.getResult());
             }
 
