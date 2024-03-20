@@ -24,8 +24,7 @@ public abstract class BaseView implements Runnable {
     }
 
     protected void printLine(String line) {
-        if (line != "")
-            writer.println(line);
+        writer.print(line);
     }
 
     protected void printLines(List<String> lines) {
