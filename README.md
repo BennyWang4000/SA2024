@@ -1,5 +1,5 @@
 # SA2024
-HW1 資工碩一 王衍斌 112598041 
+資工碩一 王衍斌 112598041 
 
 ## Fix HW2 by
 - let ```TaskPresenter.java``` be stateless
