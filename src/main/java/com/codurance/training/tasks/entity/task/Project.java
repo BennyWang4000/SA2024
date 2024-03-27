@@ -1,31 +1,58 @@
 package com.codurance.training.tasks.entity.task;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Project {
-    final Map<TaskId, Task> tasks;
+    private final ProjectName name;
+    private final List<Task> tasks;
 
-    Project() {
-        this.tasks = new LinkedHashMap<TaskId, Task>();
+    Project(ProjectName projectName) {
+        this.name = projectName;
+        this.tasks = new ArrayList<>();
     }
 
-    public void addTask(TaskId id, Task task) {
-        this.tasks.put(id, task);
+    public ProjectName getName() {
+        return this.name;
     }
 
-    public Set<Entry<TaskId, Task>> getEntrySet() {
-        return this.tasks.entrySet();
+    public boolean isTaskExist(TaskId taskId) {
+        for (Task task : this.tasks) {
+            if (task.getId().equals(taskId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addTask(Task task) {
+        this.tasks.add(task);
     }
 
     public String getShow() {
-        String res = "";
+        StringBuilder res = new StringBuilder();
+        res.append(this.name.getName() + "\n");
 
-        for (Map.Entry<TaskId, Task> task : this.tasks.entrySet()) {
-            res += task.getValue().getShow(task.getKey().getId()) + "\n";
+        for (Task task : this.tasks) {
+            res.append(task.getShow() + "\n");
         }
-        return res + "\n";
+        return res.toString() + "\n";
+    }
+
+    public Task getTask(TaskId taskId) {
+        for (Task task : this.tasks) {
+            if (task.getId().equals(taskId)) {
+                return task;
+            }
+        }
+        return null;
+    }
+
+    public void check(TaskId taskId, boolean isDone) {
+        for (Task task : this.tasks) {
+            if (task.getId().equals(taskId)) {
+                task.setDone(isDone);
+            }
+        }
     }
 }

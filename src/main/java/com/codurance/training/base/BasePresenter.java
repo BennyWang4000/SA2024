@@ -1,9 +1,9 @@
 package com.codurance.training.base;
 
-public abstract class BasePresenter<IModel> {
-    protected IModel model = null;
+public abstract class BasePresenter<IC> {
+    protected IC controller;
 
-    public BasePresenter(IModel model) {
-        this.model = model;
-    };
+    protected BasePresenter(IC controller) {
+        this.controller = controller;
+    }
 }

@@ -1,13 +1,21 @@
 package com.codurance.training.tasks.entity.task;
 
 public class IsDone {
-    private boolean isDone;
+    private boolean done;
 
     public IsDone(boolean isDone) {
-        this.isDone = isDone;
+        this.done = isDone;
     }
 
-    public boolean getIsDone() {
-        return this.isDone;
+    public char getShow() {
+        return this.done ? 'x' : ' ';
+    }
+
+    public void setDone(boolean isDone) {
+        this.done = isDone;
+    }
+
+    public boolean getDone() {
+        return this.done;
     }
 }

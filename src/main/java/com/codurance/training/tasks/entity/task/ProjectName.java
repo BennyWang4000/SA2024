@@ -2,19 +2,19 @@ package com.codurance.training.tasks.entity.task;
 
 public final class ProjectName {
 
-    private final String projectName;
+    private final String name;
 
-    public ProjectName(String projectName) {
-        this.projectName = projectName;
+    public ProjectName(String name) {
+        this.name = name;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getName() {
+        return name;
     }
 
     @Override
     public int hashCode() {
-        return this.projectName.hashCode();
+        return this.name.hashCode();
     }
 
     @Override

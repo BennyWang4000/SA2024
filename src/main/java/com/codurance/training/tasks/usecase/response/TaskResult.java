@@ -1,13 +1,25 @@
-package com.codurance.training.tasks.entity.response;
+package com.codurance.training.tasks.usecase.response;
 
 public abstract class TaskResult<T> {
 
     public enum ResultType {
         SUCCESS,
         FAILURE,
+        QUIT,
         EMPTY,
         ERROR,
-        QUIT
+    }
+
+    public T getResult() {
+        return null;
+    }
+
+    public String getFailure() {
+        return null;
+    }
+
+    public Throwable getError() {
+        return null;
     }
 
     public static <T> TaskResult<T> success(T result) {
@@ -18,16 +30,16 @@ public abstract class TaskResult<T> {
         return new Failure<>(result);
     }
 
-    public static <T> TaskResult<T> empty() {
-        return new Empty<>();
+    public static <T> TaskResult<T> error(Throwable result) {
+        return new Error<>(result);
     }
 
     public static <T> TaskResult<T> quit() {
         return new Quit<>();
     }
 
-    public static <T> TaskResult<T> error(Throwable result) {
-        return new Error<>(result);
+    public static <T> TaskResult<T> empty() {
+        return new Empty<>();
     }
 
     public abstract ResultType getType();
@@ -39,6 +51,7 @@ public abstract class TaskResult<T> {
             this.result = result;
         }
 
+        @Override
         public T getResult() {
             return result;
         }
@@ -55,22 +68,13 @@ public abstract class TaskResult<T> {
             this.result = result;
         }
 
-        public String getResult() {
+        @Override
+        public String getFailure() {
             return result;
         }
 
         public ResultType getType() {
             return ResultType.FAILURE;
-        }
-    }
-
-    public static final class Empty<T> extends TaskResult<T> {
-
-        protected Empty() {
-        }
-
-        public ResultType getType() {
-            return ResultType.EMPTY;
         }
     }
 
@@ -84,6 +88,16 @@ public abstract class TaskResult<T> {
         }
     }
 
+    public static final class Empty<T> extends TaskResult<T> {
+
+        protected Empty() {
+        }
+
+        public ResultType getType() {
+            return ResultType.EMPTY;
+        }
+    }
+
     public static final class Error<T> extends TaskResult<T> {
         private final Throwable error;
 
@@ -91,6 +105,7 @@ public abstract class TaskResult<T> {
             this.error = error;
         }
 
+        @Override
         public Throwable getError() {
             return error;
         }
