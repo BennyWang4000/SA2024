@@ -1,27 +1,32 @@
 package com.codurance.training.tasks.entity.task;
 
 public final class Task {
+    private final TaskId id;
     private final String description;
-    private IsDone done;
+    private IsDone isDone;
 
-    public Task(String description, IsDone done) {
+    public Task(long id, String description, boolean done) {
+        this.id = new TaskId(id);
         this.description = description;
-        this.done = done;
+        this.isDone = new IsDone(done);
     }
 
-    public String getDescription() {
-        return description;
+    public TaskId getId() {
+        return this.id;
     }
 
     public IsDone isDone() {
-        return done;
+        return this.isDone;
     }
 
-    public void setDone(IsDone done) {
-        this.done = done;
+    public void setDone(boolean done) {
+        this.isDone.setDone(done);
     }
 
-    public String getShow(long id) {
-        return String.format("    [%c] %d: %s", (this.isDone().getIsDone() ? 'x' : ' '), id, this.getDescription());
+    public String getShow() {
+        return String.format("    [%c] %d: %s",
+                this.isDone.getShow(),
+                this.id.getId(),
+                this.description);
     }
 }

@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.codurance.training.base.BaseView;
+import com.codurance.training.tasks.adapter.ITaskPresenter;
+import com.codurance.training.tasks.adapter.TaskPresenter;
 import com.codurance.training.tasks.entity.response.TaskResult;
 import com.codurance.training.tasks.entity.response.TaskResult.Error;
-import com.codurance.training.tasks.model.ITaskModel;
-import com.codurance.training.tasks.model.TaskModel;
-import com.codurance.training.tasks.presenter.ITaskPresenter;
-import com.codurance.training.tasks.presenter.TaskPresenter;
+import com.codurance.training.tasks.usecase.ITaskModel;
+import com.codurance.training.tasks.usecase.TaskModel;
 
 public final class TaskView extends BaseView implements ITaskView {
 
@@ -43,16 +43,11 @@ public final class TaskView extends BaseView implements ITaskView {
         String[] commandRest = commandLine.split(" ", 2);
         String command = commandRest[0];
 
-        CommandCallback<String> callback = new CommandCallback<String>() {
+        CommandCallback callback = new CommandCallback() {
 
             @Override
-            public void onSuccess(TaskResult.Success<String> result) {
-                printLine(result.getResult());
-            }
-
-            @Override
-            public void onFailure(TaskResult.Failure<String> result) {
-                printLine(result.getResult());
+            public void onSuccess(String result) {
+                printLine(result);
             }
 
             @Override
@@ -61,12 +56,8 @@ public final class TaskView extends BaseView implements ITaskView {
             }
 
             @Override
-            public void onEmpty() {
-            }
-
-            @Override
-            public void onError(Error<String> result) {
-                printLine(result.getError().toString());
+            public void onError(Throwable result) {
+                printLine(result.toString());
             }
         };
 

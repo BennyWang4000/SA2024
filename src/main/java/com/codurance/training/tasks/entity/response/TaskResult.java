@@ -10,6 +10,10 @@ public abstract class TaskResult<T> {
         QUIT
     }
 
+    public T getResult() {
+        return null;
+    }
+
     public static <T> TaskResult<T> success(T result) {
         return new Success<>(result);
     }
@@ -39,6 +43,7 @@ public abstract class TaskResult<T> {
             this.result = result;
         }
 
+        @Override
         public T getResult() {
             return result;
         }
@@ -55,7 +60,7 @@ public abstract class TaskResult<T> {
             this.result = result;
         }
 
-        public String getResult() {
+        public String getFailure() {
             return result;
         }
 
