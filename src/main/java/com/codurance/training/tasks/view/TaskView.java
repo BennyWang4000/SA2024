@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.codurance.training.base.BaseView;
-import com.codurance.training.tasks.adapter.controller.CommandController;
-import com.codurance.training.tasks.adapter.controller.ICommandController;
+import com.codurance.training.tasks.adapter.controller.TaskController;
+import com.codurance.training.tasks.adapter.controller.ITaskController;
 import com.codurance.training.tasks.adapter.presenter.ITaskPresenter;
 import com.codurance.training.tasks.adapter.presenter.TaskPresenter;
 import com.codurance.training.tasks.usecase.ITaskModel;
@@ -21,7 +21,7 @@ public final class TaskView extends BaseView implements ITaskView {
         super(reader, writer);
 
         ITaskModel model = new TaskModel();
-        ICommandController controller = new CommandController(model);
+        ITaskController controller = new TaskController(model);
         this.presenter = new TaskPresenter(controller);
     }
 

@@ -4,36 +4,23 @@ import com.codurance.training.base.BaseController;
 import com.codurance.training.tasks.usecase.ITaskModel;
 import com.codurance.training.tasks.usecase.response.TaskResult;
 
-public class CommandController extends BaseController<ITaskModel> implements ICommandController {
+public class TaskController extends BaseController<ITaskModel> implements ITaskController {
 
     public enum Type {
-        QUIT("quit"),
-        ADD("add"),
-        CHECK("check"),
-        UNCHECK("uncheck"),
-        SHOW("show"),
-        HELP("help");
-
-        public final String command;
-
-        Type(String command) {
-            this.command = command;
-        }
-
+        QUIT,
+        ADD,
+        CHECK,
+        UNCHECK,
+        SHOW,
+        HELP,
     }
 
     public enum AddType {
-        PROJECT("project"),
-        TASK("task");
-
-        public final String addType;
-
-        AddType(String addType) {
-            this.addType = addType;
-        }
+        PROJECT,
+        TASK,
     }
 
-    public CommandController(ITaskModel model) {
+    public TaskController(ITaskModel model) {
         super(model);
     }
 

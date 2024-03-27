@@ -1,7 +1,7 @@
 package com.codurance.training.tasks.usecase;
 
 import com.codurance.training.base.BaseModel;
-import com.codurance.training.tasks.adapter.controller.CommandController.AddType;
+import com.codurance.training.tasks.adapter.controller.TaskController.AddType;
 import com.codurance.training.tasks.entity.Const;
 import com.codurance.training.tasks.entity.task.ProjectName;
 import com.codurance.training.tasks.entity.task.Projects;
