@@ -1,19 +1,29 @@
 package com.codurance.training.tasks.usecase;
 
+import com.codurance.training.tasks.usecase.response.TaskResult;
+
 public interface ITaskModel {
 
     /* ---------------------------------- show ---------------------------------- */
 
-    public String getShow();
+    public TaskResult<String> getShow();
+
+    public TaskResult<String> getHelp();
+
+    public TaskResult<String> getUnknown(String command);
+
+    public TaskResult<String> quit();
 
     /* ----------------------------------- add ---------------------------------- */
 
-    public void addProject(String name);
+    public TaskResult<String> addProject(String name);
 
-    public void addTask(String name, String description);
+    public TaskResult<String> addTask(String name, String description);
 
     /* ---------------------------------- check --------------------------------- */
 
-    public void setDone(long id, boolean isDone);
+    public TaskResult<String> setDone(String[] cmdRest, boolean isDone);
+
+    public TaskResult<String> add(String[] cmdRest);
 
 }

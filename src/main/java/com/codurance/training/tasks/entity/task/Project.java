@@ -18,7 +18,7 @@ public class Project {
 
     public boolean isTaskExist(TaskId taskId) {
         for (Task task : this.tasks) {
-            if (task.getId() == taskId) {
+            if (task.getId().equals(taskId)) {
                 return true;
             }
         }
@@ -34,14 +34,14 @@ public class Project {
         res.append(this.name.getName() + "\n");
 
         for (Task task : this.tasks) {
-            res.append(task.getShow());
+            res.append(task.getShow() + "\n");
         }
-        return res + "\n";
+        return res.toString() + "\n";
     }
 
     public Task getTask(TaskId taskId) {
         for (Task task : this.tasks) {
-            if (task.getId() == taskId) {
+            if (task.getId().equals(taskId)) {
                 return task;
             }
         }
@@ -50,7 +50,7 @@ public class Project {
 
     public void check(TaskId taskId, boolean isDone) {
         for (Task task : this.tasks) {
-            if (task.getId() == taskId) {
+            if (task.getId().equals(taskId)) {
                 task.setDone(isDone);
             }
         }

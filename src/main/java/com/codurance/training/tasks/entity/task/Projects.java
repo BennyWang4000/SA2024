@@ -17,20 +17,24 @@ public class Projects {
         return ++this.id;
     }
 
-    public void addProject(ProjectName name) {
-        this.projects.add(new Project(name));
+    /* ----------------------------------- add ---------------------------------- */
+
+    public void addProject(ProjectName projectName) {
+        this.projects.add(new Project(projectName));
     }
 
-    public void addTask(ProjectName name, String description) {
+    public void addTask(ProjectName projectName, String description) {
 
         for (Project project : this.projects) {
 
-            if (project.getName() == name) {
+            if (project.getName().equals(projectName)) {
                 project.addTask(new Task(this.nextId(), description, false));
                 break;
             }
         }
     }
+
+    /* ---------------------------------- check --------------------------------- */
 
     public void check(TaskId taskId, boolean isDone) {
         for (Project project : this.projects) {
@@ -40,6 +44,8 @@ public class Projects {
         }
     }
 
+    /* -------------------------------- is exist -------------------------------- */
+
     public boolean isTaskExist(TaskId taskId) {
         for (Project project : this.projects) {
             if (project.isTaskExist(taskId)) {
@@ -47,18 +53,19 @@ public class Projects {
             }
         }
         return false;
-
     }
 
     public boolean isProjectExist(ProjectName name) {
 
         for (Project project : this.projects) {
-            if (project.getName() == name) {
+            if (project.getName().equals(name)) {
                 return true;
             }
         }
         return false;
     }
+
+    /* ---------------------------------- show ---------------------------------- */
 
     public String getShow() {
 
@@ -67,15 +74,5 @@ public class Projects {
             res.append(project.getShow());
         }
         return res.toString();
-    }
-
-    public Project getProject(ProjectName name) {
-
-        for (Project project : this.projects) {
-            if (project.getName() == name) {
-                return project;
-            }
-        }
-        return null;
     }
 }

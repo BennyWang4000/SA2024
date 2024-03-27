@@ -1,4 +1,4 @@
-package com.codurance.training.tasks.adapter;
+package com.codurance.training.tasks.adapter.presenter;
 
 import com.codurance.training.tasks.view.CommandCallback;
 

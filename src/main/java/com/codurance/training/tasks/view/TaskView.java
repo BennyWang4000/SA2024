@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.codurance.training.base.BaseView;
-import com.codurance.training.tasks.adapter.ITaskPresenter;
-import com.codurance.training.tasks.adapter.TaskPresenter;
-import com.codurance.training.tasks.entity.response.TaskResult;
-import com.codurance.training.tasks.entity.response.TaskResult.Error;
+import com.codurance.training.tasks.adapter.controller.CommandController;
+import com.codurance.training.tasks.adapter.controller.ICommandController;
+import com.codurance.training.tasks.adapter.presenter.ITaskPresenter;
+import com.codurance.training.tasks.adapter.presenter.TaskPresenter;
 import com.codurance.training.tasks.usecase.ITaskModel;
 import com.codurance.training.tasks.usecase.TaskModel;
 
@@ -19,19 +19,20 @@ public final class TaskView extends BaseView implements ITaskView {
 
     public TaskView(BufferedReader reader, PrintWriter writer) {
         super(reader, writer);
-        // ITaskService service = new TaskService();
+
         ITaskModel model = new TaskModel();
-        this.presenter = new TaskPresenter(model);
+        ICommandController controller = new CommandController(model);
+        this.presenter = new TaskPresenter(controller);
     }
 
     @Override
     public void run() {
         while (isRunning) {
-            print("> ");
-            flush();
+            writer.print("> ");
+            writer.flush();
             String command;
             try {
-                command = readLine();
+                command = reader.readLine();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -40,14 +41,20 @@ public final class TaskView extends BaseView implements ITaskView {
     }
 
     private void execute(String commandLine) {
+        String command = commandLine.split(" ", 2)[0];
         String[] commandRest = commandLine.split(" ", 2);
-        String command = commandRest[0];
 
         CommandCallback callback = new CommandCallback() {
 
             @Override
             public void onSuccess(String result) {
-                printLine(result);
+                if (!result.equals(""))
+                    writer.print(result);
+            }
+
+            @Override
+            public void onFailure(String result) {
+                writer.println(result);
             }
 
             @Override
@@ -57,8 +64,9 @@ public final class TaskView extends BaseView implements ITaskView {
 
             @Override
             public void onError(Throwable result) {
-                printLine(result.toString());
+                writer.println(result.toString());
             }
+
         };
 
         this.presenter.execute(command, commandRest, callback);
