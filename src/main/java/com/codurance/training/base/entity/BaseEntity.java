@@ -1,19 +1,20 @@
-package com.codurance.training.tasks.entity.task;
+package com.codurance.training.base.entity;
 
-public class TaskId {
-    final long id;
+public abstract class BaseEntity<T> {
 
-    public TaskId(long id) {
+    protected final T id;
+
+    protected BaseEntity(T id) {
         this.id = id;
     }
 
-    public long getId() {
+    public T getId() {
         return this.id;
     }
 
     @Override
     public int hashCode() {
-        return (int) this.id;
+        return id.hashCode();
     }
 
     @Override

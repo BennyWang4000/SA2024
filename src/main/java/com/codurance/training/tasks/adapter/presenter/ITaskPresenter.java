@@ -4,6 +4,6 @@ import com.codurance.training.tasks.view.CommandCallback;
 
 public interface ITaskPresenter {
 
-    public void execute(String command, String[] commandRest, CommandCallback callback);
+    public void execute(String commandLine, CommandCallback callback);
 
 }

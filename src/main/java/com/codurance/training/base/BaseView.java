@@ -13,5 +13,6 @@ public abstract class BaseView implements Runnable {
         this.writer = writer;
     }
 
+    @Override
     public abstract void run();
 }

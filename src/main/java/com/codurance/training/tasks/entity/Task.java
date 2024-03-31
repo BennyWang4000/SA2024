@@ -1,18 +1,15 @@
-package com.codurance.training.tasks.entity.task;
+package com.codurance.training.tasks.entity;
 
-public final class Task {
-    private final TaskId id;
+import com.codurance.training.base.entity.BaseEntity;
+
+public final class Task extends BaseEntity<TaskId> {
     private final String description;
     private IsDone isDone;
 
-    public Task(long id, String description, boolean done) {
-        this.id = new TaskId(id);
+    public Task(Long id, String description, boolean done) {
+        super(new TaskId(id));
         this.description = description;
         this.isDone = new IsDone(done);
-    }
-
-    public TaskId getId() {
-        return this.id;
     }
 
     public IsDone isDone() {
@@ -20,7 +17,7 @@ public final class Task {
     }
 
     public void setDone(boolean done) {
-        this.isDone.setDone(done);
+        this.isDone = new IsDone(done);
     }
 
     public String getShow() {

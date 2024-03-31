@@ -41,8 +41,6 @@ public final class TaskView extends BaseView implements ITaskView {
     }
 
     private void execute(String commandLine) {
-        String command = commandLine.split(" ", 2)[0];
-        String[] commandRest = commandLine.split(" ", 2);
 
         CommandCallback callback = new CommandCallback() {
 
@@ -69,7 +67,7 @@ public final class TaskView extends BaseView implements ITaskView {
 
         };
 
-        this.presenter.execute(command, commandRest, callback);
+        this.presenter.execute(commandLine, callback);
 
     }
 }
