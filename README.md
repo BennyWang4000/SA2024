@@ -13,7 +13,12 @@
 │   ├── BaseController.java
 │   ├── BaseModel.java
 │   ├── BasePresenter.java
-│   └── BaseView.java
+│   ├── BaseView.java
+│   └── entity
+│       ├── BaseAggregate.java
+│       ├── BaseEntity.java
+│       ├── BaseService.java
+│       └── BaseValueObject.java
 ├── Main.java
 └── tasks
     ├── adapter
@@ -24,14 +29,13 @@
     │       ├── ITaskPresenter.java
     │       └── TaskPresenter.java
     ├── entity
-    │   ├── Const.java
-    │   └── task
-    │       ├── IsDone.java
-    │       ├── Project.java
-    │       ├── ProjectName.java
-    │       ├── Projects.java
-    │       ├── TaskId.java
-    │       └── Task.java
+    │   ├── IsDone.java
+    │   ├── MessageService.java
+    │   ├── Project.java
+    │   ├── ProjectName.java
+    │   ├── Projects.java
+    │   ├── TaskId.java
+    │   └── Task.java
     ├── usecase
     │   ├── ITaskModel.java
     │   ├── response
