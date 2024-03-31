@@ -1,10 +1,10 @@
 # SA2024
 資工碩一 王衍斌 112598041 
 
-## Fix HW3 by
-- add the controller and call methods of model
-- TaskResult as ResponseModel
-- aggregate domain model
+## Fix HW4 by
+- set IsDone as value object
+- rename TaskModel to TaskRepository
+- entity, value object marker interface
 
 ## Tree
 ```
@@ -13,7 +13,12 @@
 │   ├── BaseController.java
 │   ├── BaseModel.java
 │   ├── BasePresenter.java
-│   └── BaseView.java
+│   ├── BaseView.java
+│   └── entity
+│       ├── BaseAggregate.java
+│       ├── BaseEntity.java
+│       ├── BaseService.java
+│       └── BaseValueObject.java
 ├── Main.java
 └── tasks
     ├── adapter
@@ -24,14 +29,13 @@
     │       ├── ITaskPresenter.java
     │       └── TaskPresenter.java
     ├── entity
-    │   ├── Const.java
-    │   └── task
-    │       ├── IsDone.java
-    │       ├── Project.java
-    │       ├── ProjectName.java
-    │       ├── Projects.java
-    │       ├── TaskId.java
-    │       └── Task.java
+    │   ├── IsDone.java
+    │   ├── MessageService.java
+    │   ├── Project.java
+    │   ├── ProjectName.java
+    │   ├── Projects.java
+    │   ├── TaskId.java
+    │   └── Task.java
     ├── usecase
     │   ├── ITaskModel.java
     │   ├── response

@@ -1,11 +1,10 @@
 package com.codurance.training.tasks.usecase;
 
 import com.codurance.training.base.BaseModel;
-import com.codurance.training.tasks.adapter.controller.TaskController.AddType;
-import com.codurance.training.tasks.entity.Const;
-import com.codurance.training.tasks.entity.task.ProjectName;
-import com.codurance.training.tasks.entity.task.Projects;
-import com.codurance.training.tasks.entity.task.TaskId;
+import com.codurance.training.tasks.entity.MessageService;
+import com.codurance.training.tasks.entity.ProjectName;
+import com.codurance.training.tasks.entity.Projects;
+import com.codurance.training.tasks.entity.TaskId;
 import com.codurance.training.tasks.usecase.response.TaskResult;
 
 public class TaskModel extends BaseModel implements ITaskModel {
@@ -14,7 +13,7 @@ public class TaskModel extends BaseModel implements ITaskModel {
 
     public TaskModel() {
         super();
-        this.projects = new Projects();
+        this.projects = new Projects("0001");
     }
 
     /* ---------------------------------- show ---------------------------------- */
@@ -26,12 +25,12 @@ public class TaskModel extends BaseModel implements ITaskModel {
 
     @Override
     public TaskResult<String> getHelp() {
-        return TaskResult.success(Const.HELP_MSG);
+        return TaskResult.success(MessageService.getHelpMsg());
     }
 
     @Override
     public TaskResult<String> getUnknown(String command) {
-        return TaskResult.success(Const.getNoCmdMsg(command));
+        return TaskResult.fail(MessageService.getCmdNotFound(command));
     }
 
     @Override
@@ -40,26 +39,6 @@ public class TaskModel extends BaseModel implements ITaskModel {
     }
 
     /* ----------------------------------- add ---------------------------------- */
-
-    @Override
-    public TaskResult<String> add(String[] cmdRest) {
-        try {
-            String[] typeRest = cmdRest[1].split(" ", 2);
-            String type = typeRest[0];
-            switch (AddType.valueOf(type.toUpperCase())) {
-                case PROJECT:
-                    return addProject(typeRest[1]);
-                case TASK:
-                    return addTask(
-                            typeRest[1].split(" ", 2)[0],
-                            typeRest[1].split(" ", 2)[1]);
-                default:
-                    return TaskResult.fail(Const.getNoCmdMsg(type));
-            }
-        } catch (Exception e) {
-            return TaskResult.error(e);
-        }
-    }
 
     @Override
     public TaskResult<String> addProject(String name) {
@@ -75,7 +54,7 @@ public class TaskModel extends BaseModel implements ITaskModel {
         ProjectName projectName = new ProjectName(name);
 
         if (!projects.isProjectExist(projectName)) {
-            return TaskResult.fail(Const.getNoProjMsg(projectName.getName()));
+            return TaskResult.fail(MessageService.getProjNotFound(projectName.getValue()));
         }
 
         projects.addTask(projectName, description);
@@ -90,7 +69,7 @@ public class TaskModel extends BaseModel implements ITaskModel {
         TaskId taskId = new TaskId(Long.parseLong(cmdRest[1]));
 
         if (!projects.isTaskExist(taskId)) {
-            return TaskResult.fail(Const.getNoTaskMsg(taskId.getId()));
+            return TaskResult.fail(MessageService.getTaskNotFound(taskId.getId()));
         }
         projects.check(taskId, isDone);
 

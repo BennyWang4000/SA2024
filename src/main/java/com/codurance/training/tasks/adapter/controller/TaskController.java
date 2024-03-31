@@ -31,7 +31,17 @@ public class TaskController extends BaseController<ITaskModel> implements ITaskC
                 case QUIT:
                     return this.model.quit();
                 case ADD:
-                    return this.model.add(cmdRest);
+                    String[] typeRest = cmdRest[1].split(" ", 2);
+                    switch (AddType.valueOf(typeRest[0].toUpperCase())) {
+                        case PROJECT:
+                            return this.model.addProject(typeRest[1]);
+                        case TASK:
+                            return this.model.addTask(
+                                    typeRest[1].split(" ", 2)[0],
+                                    typeRest[1].split(" ", 2)[1]);
+                        default:
+                    }
+                    break;
                 case CHECK:
                     return this.model.setDone(cmdRest, true);
                 case UNCHECK:
@@ -41,7 +51,8 @@ public class TaskController extends BaseController<ITaskModel> implements ITaskC
                 case HELP:
                     return this.model.getHelp();
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
+            return this.model.getUnknown(cmd);
         }
         return this.model.getUnknown(cmd);
     }

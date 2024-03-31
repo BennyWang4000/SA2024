@@ -24,6 +24,4 @@ public interface ITaskModel {
 
     public TaskResult<String> setDone(String[] cmdRest, boolean isDone);
 
-    public TaskResult<String> add(String[] cmdRest);
-
 }

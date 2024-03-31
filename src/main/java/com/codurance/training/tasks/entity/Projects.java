@@ -1,33 +1,31 @@
-package com.codurance.training.tasks.entity.task;
+package com.codurance.training.tasks.entity;
 
-import java.util.List;
-import java.util.ArrayList;
+import com.codurance.training.base.entity.BaseAggregate;
 
-public class Projects {
-    private final List<Project> projects;
+public class Projects extends BaseAggregate<String, Project> {
 
-    private long id;
+    private long taskId;
 
-    public Projects() {
-        this.projects = new ArrayList<>();
-        this.id = 0;
+    public Projects(String id) {
+        super(id);
+        this.taskId = 0;
     }
 
     public long nextId() {
-        return ++this.id;
+        return ++this.taskId;
     }
 
     /* ----------------------------------- add ---------------------------------- */
 
     public void addProject(ProjectName projectName) {
-        this.projects.add(new Project(projectName));
+        this.contents.add(new Project(projectName));
     }
 
     public void addTask(ProjectName projectName, String description) {
 
-        for (Project project : this.projects) {
+        for (Project project : this.contents) {
 
-            if (project.getName().equals(projectName)) {
+            if (project.getId().equals(projectName)) {
                 project.addTask(new Task(this.nextId(), description, false));
                 break;
             }
@@ -37,17 +35,17 @@ public class Projects {
     /* ---------------------------------- check --------------------------------- */
 
     public void check(TaskId taskId, boolean isDone) {
-        for (Project project : this.projects) {
+
+        for (Project project : this.contents) {
             if (project.isTaskExist(taskId)) {
                 project.check(taskId, isDone);
             }
         }
     }
 
-    /* -------------------------------- is exist -------------------------------- */
-
     public boolean isTaskExist(TaskId taskId) {
-        for (Project project : this.projects) {
+
+        for (Project project : this.contents) {
             if (project.isTaskExist(taskId)) {
                 return true;
             }
@@ -57,8 +55,8 @@ public class Projects {
 
     public boolean isProjectExist(ProjectName name) {
 
-        for (Project project : this.projects) {
-            if (project.getName().equals(name)) {
+        for (Project project : this.contents) {
+            if (project.getId().equals(name)) {
                 return true;
             }
         }
@@ -70,7 +68,7 @@ public class Projects {
     public String getShow() {
 
         StringBuilder res = new StringBuilder();
-        for (Project project : this.projects) {
+        for (Project project : this.contents) {
             res.append(project.getShow());
         }
         return res.toString();

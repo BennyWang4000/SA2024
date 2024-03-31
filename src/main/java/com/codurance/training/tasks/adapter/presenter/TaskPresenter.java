@@ -12,8 +12,11 @@ public class TaskPresenter extends BasePresenter<ITaskController> implements ITa
     }
 
     @Override
-    public void execute(String cmd, String[] commandRest, CommandCallback callback) {
-        TaskResult<String> result = controller.execute(cmd, commandRest);
+    public void execute(String commandLine, CommandCallback callback) {
+        String command = commandLine.split(" ", 2)[0];
+        String[] commandRest = commandLine.split(" ", 2);
+
+        TaskResult<String> result = controller.execute(command, commandRest);
         switch (result.getType()) {
             case SUCCESS:
                 callback.onSuccess(result.getResult());
