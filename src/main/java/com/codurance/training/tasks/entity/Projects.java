@@ -1,5 +1,9 @@
 package com.codurance.training.tasks.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.codurance.training.base.entity.BaseAggregate;
 
 public class Projects extends BaseAggregate<String, Project> {
@@ -15,10 +19,18 @@ public class Projects extends BaseAggregate<String, Project> {
         return ++this.taskId;
     }
 
+    /* ----------------------------------- get ---------------------------------- */
+
+    public List<Project> getProjects() {
+        return contents.stream()
+                .map(project -> (Project) new ImmutableProject(project.getId(), project.getTasks()))
+                .collect(Collectors.toList());
+    }
+
     /* ----------------------------------- add ---------------------------------- */
 
     public void addProject(ProjectName projectName) {
-        this.contents.add(new Project(projectName));
+        this.contents.add(new Project(projectName, new ArrayList<>()));
     }
 
     public void addTask(ProjectName projectName, String description) {
@@ -26,7 +38,7 @@ public class Projects extends BaseAggregate<String, Project> {
         for (Project project : this.contents) {
 
             if (project.getId().equals(projectName)) {
-                project.addTask(new Task(this.nextId(), description, false));
+                project.addTask(new Task(new TaskId(this.nextId()), description, IsDone.of(false)));
                 break;
             }
         }

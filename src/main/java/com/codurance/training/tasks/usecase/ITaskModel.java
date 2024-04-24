@@ -1,6 +1,6 @@
 package com.codurance.training.tasks.usecase;
 
-import com.codurance.training.tasks.usecase.response.TaskResult;
+import com.codurance.training.tasks.adapter.response.TaskResult;
 
 public interface ITaskModel {
 

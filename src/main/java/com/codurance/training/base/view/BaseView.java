@@ -1,4 +1,4 @@
-package com.codurance.training.base;
+package com.codurance.training.base.view;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;

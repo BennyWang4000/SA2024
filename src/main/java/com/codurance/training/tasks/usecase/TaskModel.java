@@ -1,11 +1,11 @@
 package com.codurance.training.tasks.usecase;
 
-import com.codurance.training.base.BaseModel;
+import com.codurance.training.base.usecase.BaseModel;
+import com.codurance.training.tasks.adapter.response.TaskResult;
 import com.codurance.training.tasks.entity.MessageService;
 import com.codurance.training.tasks.entity.ProjectName;
 import com.codurance.training.tasks.entity.Projects;
 import com.codurance.training.tasks.entity.TaskId;
-import com.codurance.training.tasks.usecase.response.TaskResult;
 
 public class TaskModel extends BaseModel implements ITaskModel {
 

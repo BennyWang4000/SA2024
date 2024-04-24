@@ -1,14 +1,14 @@
 package com.codurance.training.base.entity;
 
-public abstract class BaseEntity<T> {
+public abstract class BaseEntity<ID> {
 
-    protected final T id;
+    protected final ID id;
 
-    protected BaseEntity(T id) {
+    protected BaseEntity(ID id) {
         this.id = id;
     }
 
-    public T getId() {
+    public ID getId() {
         return this.id;
     }
 

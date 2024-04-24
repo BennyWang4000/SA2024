@@ -1,4 +1,4 @@
-package com.codurance.training.tasks.usecase.response;
+package com.codurance.training.tasks.adapter.response;
 
 public abstract class TaskResult<T> {
 
@@ -99,15 +99,15 @@ public abstract class TaskResult<T> {
     }
 
     public static final class Error<T> extends TaskResult<T> {
-        private final Throwable error;
+        private final Throwable throwable;
 
         protected Error(Throwable error) {
-            this.error = error;
+            this.throwable = error;
         }
 
         @Override
         public Throwable getError() {
-            return error;
+            return throwable;
         }
 
         public ResultType getType() {

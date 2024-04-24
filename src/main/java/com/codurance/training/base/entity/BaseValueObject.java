@@ -1,18 +1,14 @@
 package com.codurance.training.base.entity;
 
-public class BaseValueObject<T> {
+public class BaseValueObject<V> {
 
-    protected final T value;
+    protected final V value;
 
-    protected BaseValueObject(T value) {
+    protected BaseValueObject(V value) {
         this.value = value;
     }
 
-    public BaseValueObject<T> of(T value) {
-        return new BaseValueObject<>(value);
-    }
-
-    public T getValue() {
+    public V getValue() {
         return this.value;
     }
 

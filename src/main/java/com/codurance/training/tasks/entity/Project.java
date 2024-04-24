@@ -1,17 +1,25 @@
 package com.codurance.training.tasks.entity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.codurance.training.base.entity.BaseEntity;
-
-import java.util.ArrayList;
 
 public class Project extends BaseEntity<ProjectName> {
     private final List<Task> tasks;
 
-    Project(ProjectName projectName) {
+    Project(ProjectName projectName, List<Task> tasks) {
         super(projectName);
-        this.tasks = new ArrayList<>();
+        this.tasks = tasks;
+    }
+
+    /* ----------------------------------- get ---------------------------------- */
+
+    public List<Task> getTasks() {
+
+        return tasks.stream()
+                .map(task -> (Task) new ImmutableTask(task.getId(), task.getDescription(), task.isDone()))
+                .collect(Collectors.toList());
     }
 
     /* ----------------------------------- add ---------------------------------- */
@@ -25,7 +33,7 @@ public class Project extends BaseEntity<ProjectName> {
     public void check(TaskId taskId, boolean isDone) {
         for (Task task : this.tasks) {
             if (task.getId().equals(taskId)) {
-                task.setDone(isDone);
+                task.setDone(IsDone.of(isDone));
             }
         }
     }

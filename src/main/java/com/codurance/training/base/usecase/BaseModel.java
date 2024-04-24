@@ -1,4 +1,4 @@
-package com.codurance.training.base;
+package com.codurance.training.base.usecase;
 
 public abstract class BaseModel {
     protected BaseModel() {
